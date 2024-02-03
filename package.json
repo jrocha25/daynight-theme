@@ -19,6 +19,16 @@
           "type": "string",
           "default": "New York, NY",
           "description": "The location to use for the day/night cycle"
+        },
+        "daynight-dynamix.dayTheme": {
+          "type": "string",
+          "default": "Default Light+",
+          "description": "The themes to use for the day"
+        },
+        "daynight-dynamix.nightTheme": {
+          "type": "string",
+          "default": "Default Dark+",
+          "description": "The themes to use for the night"
         }
       }
     },
@@ -30,6 +40,14 @@
       {
         "command": "daynight-dynamix.changeTheme",
         "title": "Change Theme"
+      },
+      {
+        "command": "daynight-dynamix.setThemes",
+        "title": "Set Themes"
+      },
+      {
+        "command": "daynight-dynamix.toggleAutoChange",
+        "title": "Toggle Auto Change"
       }
     ]
   },
