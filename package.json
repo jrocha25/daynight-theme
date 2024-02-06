@@ -1,6 +1,6 @@
 {
-  "name": "daynight-dynamix",
-  "displayName": "daynight-dynamix",
+  "name": "daynight-theme",
+  "displayName": "daynight-theme",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -13,19 +13,19 @@
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
-      "title": "DayNight Dynamix",
+      "title": "DayNight Theme",
       "properties": {
-        "daynight-dynamix.location": {
+        "daynight-theme.location": {
           "type": "string",
-          "default": "New York, NY",
+          "default": "Portugal",
           "description": "The location to use for the day/night cycle"
         },
-        "daynight-dynamix.dayTheme": {
+        "daynight-theme.dayTheme": {
           "type": "string",
           "default": "Default Light+",
           "description": "The themes to use for the day"
         },
-        "daynight-dynamix.nightTheme": {
+        "daynight-theme.nightTheme": {
           "type": "string",
           "default": "Default Dark+",
           "description": "The themes to use for the night"
@@ -34,19 +34,19 @@
     },
     "commands": [
       {
-        "command": "daynight-dynamix.setLocation",
+        "command": "daynight-theme.setLocation",
         "title": "Set Location"
       },
       {
-        "command": "daynight-dynamix.changeTheme",
+        "command": "daynight-theme.changeTheme",
         "title": "Change Theme"
       },
       {
-        "command": "daynight-dynamix.setThemes",
+        "command": "daynight-theme.setThemes",
         "title": "Set Themes"
       },
       {
-        "command": "daynight-dynamix.toggleAutoChange",
+        "command": "daynight-theme.toggleAutoChange",
         "title": "Toggle Auto Change"
       }
     ]
@@ -60,14 +60,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.86.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
+    "@types/vscode": "^1.86.0",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
     "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.7"
   }
 }

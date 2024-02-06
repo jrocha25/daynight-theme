@@ -1,6 +1,15 @@
 import * as vscode from 'vscode';
+import { get } from 'axios';
 
-export const extensionName = 'daynight-dynamix';
+type CountriesAPIResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    name: string;
+  }[];
+};
+
+export const extensionName = 'daynight-theme';
 
 export function changeThemeBasedOnTime() {
   //TODO: Add a API call to get the user's location and then use the sunrise-sunset API to get the sunrise and sunset times
@@ -20,9 +29,22 @@ export function changeThemeBasedOnTime() {
 }
 
 export async function setLocation() {
-  const userInput = await vscode.window.showInputBox({ placeHolder: 'Enter your location' });
-  if (userInput) {
-    vscode.window.showInformationMessage(`You entered: ${userInput}`);
+  try {
+    const response = await get<CountriesAPIResponse>('http://localhost:8080/v1/countries');
+    const locations = response.data.data.map(location => location.name);
+
+    const selectedLocation = await vscode.window.showQuickPick(locations, {
+      placeHolder: 'Select your location',
+    });
+
+    if (selectedLocation) {
+      let configuration = vscode.workspace.getConfiguration(extensionName);
+      configuration.update('location', selectedLocation, vscode.ConfigurationTarget.Global);
+      vscode.window.showInformationMessage(`You selected: ${selectedLocation}`);
+    }
+  } catch (error) {
+    console.error('Failed to fetch locations:', error);
+    vscode.window.showErrorMessage('Failed to fetch locations');
   }
 }
 
