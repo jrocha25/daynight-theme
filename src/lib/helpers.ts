@@ -1,31 +1,65 @@
 import * as vscode from 'vscode';
 import { get } from 'axios';
 
-type CountriesAPIResponse = {
+type APIResponse<T> = {
   success: boolean;
   message: string;
-  data: {
-    name: string;
-  }[];
+  data: T;
 };
+
+type CountriesAPIResponse = APIResponse<{
+  name: string;
+  code: string;
+}[]>;
+
+type Times = APIResponse<{
+  date: string;
+  sunrise: string;
+  sunset: string;
+  timezone: string;
+}>;
 
 export const extensionName = 'daynight-theme';
 
-export function changeThemeBasedOnTime() {
-  //TODO: Add a API call to get the user's location and then use the sunrise-sunset API to get the sunrise and sunset times
-  const hour = 20;
-  // const hour = new Date().getHours();
-  const configuration = vscode.workspace.getConfiguration();
-  const dayTheme = configuration.get('dayTheme');
-  const nightTheme = configuration.get('nightTheme');
+export async function checkTimes() {
+  // Gets all the configuration settings for the extension
+  let configuration = vscode.workspace.getConfiguration(extensionName);
 
-  if (hour >= 6 && hour < 18) {
-    // Day theme
-    configuration.update('workbench.colorTheme', dayTheme, vscode.ConfigurationTarget.Global);
-  } else {
-    // Night theme
-    configuration.update('workbench.colorTheme', nightTheme, vscode.ConfigurationTarget.Global);
+  // Get the location from the configuration
+  const location = configuration.get('location');
+
+  const response = await get<Times>('http://localhost:8080/v1/times?location=' + location);
+  if (response.data.success) {
+    const times = response.data.data;
+    const dayTheme = configuration.get('dayTheme') as string;
+    const nightTheme = configuration.get('nightTheme') as string;
+
+    // const currentDate = new Date('2024-02-06T13:30:00');
+    const currentDate = new Date();
+    const sunriseTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunrise}`);
+    const sunsetTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunset}`);
+
+    console.log('currentDate:', currentDate);
+    console.log('sunriseTime:', sunriseTime);
+    console.log('sunsetTime:', sunsetTime);
+
+    if (currentDate >= sunriseTime && currentDate <= sunsetTime) {
+      // Day theme
+      console.log(dayTheme);
+      changeTheme(dayTheme);
+      vscode.window.showInformationMessage('🌅');
+      console.log('Day theme');
+      return;
+    } else {
+      // Night theme
+      console.log(nightTheme);
+      changeTheme(nightTheme);
+      vscode.window.showInformationMessage('🌇');
+      console.log('Night theme');
+    }
   }
+  vscode.window.showWarningMessage('Failed to fetch sunrise and sunset times');
+  console.error('Failed to fetch sunrise and sunset times:', response.data.message);
 }
 
 export async function setLocation() {
@@ -48,10 +82,6 @@ export async function setLocation() {
   }
 }
 
-export function changeTheme() {
-  changeThemeBasedOnTime();
-}
-
 export async function setThemes() {
   const themeExtensions = vscode.extensions.all.filter(extension => {
     return extension.packageJSON.contributes && extension.packageJSON.contributes.themes;
@@ -59,7 +89,12 @@ export async function setThemes() {
 
   // Get the names of all themes
   const themeNames = themeExtensions.flatMap(extension => {
-    return extension.packageJSON.contributes.themes.map((theme: any) => theme.label);
+    return extension.packageJSON.contributes.themes.map((theme: any) => {
+      if (!theme.id) {
+        return theme.label;
+      }
+      return theme.id;
+    });
   });
 
   // Ask the user to select a theme
@@ -76,4 +111,8 @@ export async function setThemes() {
     configuration.update('dayTheme', selectedDayTheme, vscode.ConfigurationTarget.Global);
     configuration.update('nightTheme', selectedNightTheme, vscode.ConfigurationTarget.Global);
   }
+}
+
+export function changeTheme(themeName: string) {
+  vscode.workspace.getConfiguration().update('workbench.colorTheme', themeName, true);
 }
