@@ -57,9 +57,10 @@ export async function checkTimes() {
       vscode.window.showInformationMessage('🌇');
       console.log('Night theme');
     }
+  } else {
+    console.error('Failed to fetch times:', response.data.message);
+    vscode.window.showErrorMessage('Failed to fetch times');
   }
-  vscode.window.showWarningMessage('Failed to fetch sunrise and sunset times');
-  console.error('Failed to fetch sunrise and sunset times:', response.data.message);
 }
 
 export async function setLocation() {
