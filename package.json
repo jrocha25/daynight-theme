@@ -2,7 +2,7 @@
   "name": "daynight-theme",
   "displayName": "DayNight Theme",
   "description": "Changes the theme based on the time of day of your location",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "icon": "img/icon.jpg",
   "publisher": "joao-rocha",
   "engines": {
@@ -41,19 +41,15 @@
     "commands": [
       {
         "command": "daynight-theme.setLocation",
-        "title": "Set Location"
+        "title": "DayNight Theme: Set Location"
       },
       {
         "command": "daynight-theme.changeTheme",
-        "title": "Change Theme"
+        "title": "DayNight Theme: Change Theme"
       },
       {
         "command": "daynight-theme.setThemes",
-        "title": "Set Themes"
-      },
-      {
-        "command": "daynight-theme.toggleAutoChange",
-        "title": "Toggle Auto Change"
+        "title": "DayNight Theme: Set Themes"
       }
     ]
   },
