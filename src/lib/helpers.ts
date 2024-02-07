@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { get } from 'axios';
 
+const API_URL = 'https://api.daynight-theme.dev';
+
 type APIResponse<T> = {
   success: boolean;
   message: string;
@@ -28,7 +30,7 @@ export async function checkTimes() {
   // Get the location from the configuration
   const location = configuration.get('location');
 
-  const response = await get<Times>('http://localhost:8080/v1/times?location=' + location);
+  const response = await get<Times>(API_URL + '/v1/times?location=' + location);
   if (response.data.success) {
     const times = response.data.data;
     const dayTheme = configuration.get('dayTheme') as string;
@@ -65,7 +67,7 @@ export async function checkTimes() {
 
 export async function setLocation() {
   try {
-    const response = await get<CountriesAPIResponse>('http://localhost:8080/v1/countries');
+    const response = await get<CountriesAPIResponse>(API_URL + '/v1/countries');
     const locations = response.data.data.map(location => location.name);
 
     const selectedLocation = await vscode.window.showQuickPick(locations, {
