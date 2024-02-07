@@ -2,7 +2,7 @@
   "name": "daynight-theme",
   "displayName": "DayNight Theme",
   "description": "Changes the theme based on the time of day of your location",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "img/icon.jpg",
   "publisher": "joao-rocha",
   "engines": {
