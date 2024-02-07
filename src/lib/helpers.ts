@@ -1,26 +1,8 @@
 import * as vscode from 'vscode';
 import { get } from 'axios';
+import { CountriesAPIResponse, Times } from '../types';
 
 const API_URL = 'https://api.daynight-theme.dev';
-
-type APIResponse<T> = {
-  success: boolean;
-  message: string;
-  data: T;
-};
-
-type CountriesAPIResponse = APIResponse<{
-  name: string;
-  code: string;
-}[]>;
-
-type Times = APIResponse<{
-  date: string;
-  sunrise: string;
-  sunset: string;
-  timezone: string;
-}>;
-
 export const extensionName = 'daynight-theme';
 
 export async function checkTimes() {
@@ -123,4 +105,11 @@ export async function setThemes() {
 
 export function changeTheme(themeName: string) {
   vscode.workspace.getConfiguration().update('workbench.colorTheme', themeName, true);
+}
+
+export function cleanUp() {
+  let configuration = vscode.workspace.getConfiguration(extensionName);
+  configuration.update('location', undefined, vscode.ConfigurationTarget.Global);
+  configuration.update('dayTheme', undefined, vscode.ConfigurationTarget.Global);
+  configuration.update('nightTheme', undefined, vscode.ConfigurationTarget.Global);
 }
