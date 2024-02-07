@@ -9,6 +9,10 @@
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrocha25/daynight-theme"
+  },
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
