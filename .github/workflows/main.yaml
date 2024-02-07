@@ -1,9 +1,9 @@
 name: Package and Publish Extension
 
 on:
-  push:
+  release:
     branches:
-      - main # replace with your default branch if not 'main'
+      - main
 
 jobs:
   build-and-publish:

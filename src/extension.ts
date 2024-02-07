@@ -11,9 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	disposable = vscode.commands.registerCommand(`${extensionName}.setThemes`, setThemes);
 	context.subscriptions.push(disposable);
 
-	// setInterval(changeThemeBasedOnTime, 1000 * 60 * 5); // 5 minutes
-
-	setInterval(checkTimes, 10 * 1000);
+	setInterval(checkTimes, 5 * 60 * 1000);
 
 }
 

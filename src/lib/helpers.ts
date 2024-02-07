@@ -27,6 +27,14 @@ export async function checkTimes() {
   // Gets all the configuration settings for the extension
   let configuration = vscode.workspace.getConfiguration(extensionName);
 
+  if (!configuration.get('location')) {
+    return;
+  }
+
+  if (!configuration.get('dayTheme') || !configuration.get('nightTheme')) {
+    return;
+  }
+
   // Get the location from the configuration
   const location = configuration.get('location');
 
@@ -36,7 +44,6 @@ export async function checkTimes() {
     const dayTheme = configuration.get('dayTheme') as string;
     const nightTheme = configuration.get('nightTheme') as string;
 
-    // const currentDate = new Date('2024-02-06T13:30:00');
     const currentDate = new Date();
     const sunriseTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunrise}`);
     const sunsetTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunset}`);
@@ -49,14 +56,12 @@ export async function checkTimes() {
       // Day theme
       console.log(dayTheme);
       changeTheme(dayTheme);
-      vscode.window.showInformationMessage('🌅');
       console.log('Day theme');
       return;
     } else {
       // Night theme
       console.log(nightTheme);
       changeTheme(nightTheme);
-      vscode.window.showInformationMessage('🌇');
       console.log('Night theme');
     }
   } else {
