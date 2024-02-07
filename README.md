@@ -1,71 +1,48 @@
-# daynight-dynamix README
+# DayNight Theme
 
-This is the README for your extension "daynight-dynamix". After writing up a brief description, we recommend including the following sections.
+## Description
 
-## Features
+DayNight Theme is a Visual Studio Code extension that automatically changes your VS Code theme based on the time of day. It uses your location to determine the sunrise and sunset times, and switches between a day theme and a night theme accordingly.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Installation
 
-For example if there is an image subfolder under your extension project workspace:
+1. Open Visual Studio Code
+2. Go to the Extensions view (Ctrl+Shift+X)
+3. Search for "DayNight Theme"
+4. Click on the Install button
 
-\!\[feature X\]\(images/feature-x.png\)
+## Usage
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+After installing the extension, you need to set your location and choose your preferred day and night themes. You can do this by running the following commands from the Command Palette (Ctrl+Shift+P):
 
-## Requirements
+- `DayNight Theme: Set Location`
+- `DayNight Theme: Set Themes`
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+You can also manually change the theme or toggle the automatic theme change feature with these commands:
+
+- `DayNight Theme: Change Theme`
+- `DayNight Theme: Toggle Auto Change`
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- `daynight-theme.location`: The location to use for the day/night cycle
+- `daynight-theme.dayTheme`: The theme to use during the day
+- `daynight-theme.nightTheme`: The theme to use during the night
 
-## Known Issues
+## Contributing
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Contributions are welcome! Please read our [contributing guidelines](CONTRIBUTING.md) for details on how to contribute to this project.
 
-## Release Notes
+## Changelog
 
-Users appreciate release notes as you update your extension.
+See the [CHANGELOG.md](CHANGELOG.md) file for the changes made in each version of the extension.
 
-### 1.0.0
+## License
 
-Initial release of ...
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### 1.0.1
+## Contact
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+If you encounter any issues or have any questions about this extension, please open an issue on our [GitHub repository](https://github.com/joaorocha281/daynight-theme).
