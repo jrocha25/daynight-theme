@@ -3,6 +3,8 @@
   "displayName": "daynight-theme",
   "description": "",
   "version": "0.0.1",
+  "icon": "img/icon.jpg",
+  "publisher": "joao-rocha",
   "engines": {
     "vscode": "^1.86.0"
   },
