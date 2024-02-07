@@ -5,7 +5,7 @@ import { CountriesAPIResponse, Times } from '../types';
 const API_URL = 'https://api.daynight-theme.dev';
 export const extensionName = 'daynight-theme';
 
-export async function checkTimes() {
+export async function checkTimesRoutine() {
   // Gets all the configuration settings for the extension
   let configuration = vscode.workspace.getConfiguration(extensionName);
 
@@ -21,55 +21,54 @@ export async function checkTimes() {
   const location = configuration.get('location');
 
   const response = await get<Times>(API_URL + '/v1/times?location=' + location);
-  if (response.data.success) {
-    const times = response.data.data;
-    const dayTheme = configuration.get('dayTheme') as string;
-    const nightTheme = configuration.get('nightTheme') as string;
 
-    const currentDate = new Date();
-    const sunriseTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunrise}`);
-    const sunsetTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunset}`);
-
-    console.log('currentDate:', currentDate);
-    console.log('sunriseTime:', sunriseTime);
-    console.log('sunsetTime:', sunsetTime);
-
-    if (currentDate >= sunriseTime && currentDate <= sunsetTime) {
-      // Day theme
-      console.log(dayTheme);
-      changeTheme(dayTheme);
-      console.log('Day theme');
-      return;
-    } else {
-      // Night theme
-      console.log(nightTheme);
-      changeTheme(nightTheme);
-      console.log('Night theme');
-    }
-  } else {
-    console.error('Failed to fetch times:', response.data.message);
-    vscode.window.showErrorMessage('Failed to fetch times');
+  if (!response.data.success) {
+    vscode.window.showErrorMessage('Failed to fetch the sunrise and sunset times!');
+    return;
   }
+
+  const times = response.data.data;
+  const dayTheme = configuration.get('dayTheme') as string;
+  const nightTheme = configuration.get('nightTheme') as string;
+
+  const currentDate = new Date();
+  const sunriseTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunrise}`);
+  const sunsetTime = new Date(`${currentDate.toISOString().split('T')[0]}T${times.sunset}`);
+
+  // Day theme
+  if (currentDate >= sunriseTime && currentDate <= sunsetTime) {
+    changeTheme(dayTheme);
+    return;
+  }
+
+  // Night theme
+  changeTheme(nightTheme);
+  return;
 }
 
 export async function setLocation() {
-  try {
-    const response = await get<CountriesAPIResponse>(API_URL + '/v1/countries');
-    const locations = response.data.data.map(location => location.name);
+  const response = await get<CountriesAPIResponse>(API_URL + '/v1/countries');
 
-    const selectedLocation = await vscode.window.showQuickPick(locations, {
-      placeHolder: 'Select your location',
-    });
-
-    if (selectedLocation) {
-      let configuration = vscode.workspace.getConfiguration(extensionName);
-      configuration.update('location', selectedLocation, vscode.ConfigurationTarget.Global);
-      vscode.window.showInformationMessage(`You selected: ${selectedLocation}`);
-    }
-  } catch (error) {
-    console.error('Failed to fetch locations:', error);
+  if (!response.data.success) {
     vscode.window.showErrorMessage('Failed to fetch locations');
+    return;
   }
+
+  const locations = response.data.data.map(location => location.name);
+
+  const selectedLocation = await vscode.window.showQuickPick(locations, {
+    placeHolder: 'Select your location',
+  });
+
+  if (selectedLocation) {
+    let configuration = vscode.workspace.getConfiguration(extensionName);
+    configuration.update('location', selectedLocation, vscode.ConfigurationTarget.Global);
+    vscode.window.showInformationMessage(`You selected: ${selectedLocation}`);
+    return;
+  }
+
+  vscode.window.showErrorMessage('Failed to set location');
+  return;
 }
 
 export async function setThemes() {
