@@ -9,6 +9,12 @@ export async function checkTimesRoutine() {
   // Gets all the configuration settings for the extension
   let configuration = vscode.workspace.getConfiguration(extensionName);
 
+  // Check if the extension is turned on
+  if (!configuration.get('isTurnedOn')) {
+    return;
+  }
+
+  // Check if the location and themes are set
   if (!configuration.get('location')) {
     return;
   }
@@ -104,6 +110,16 @@ export async function setThemes() {
 
 export function changeTheme(themeName: string) {
   vscode.workspace.getConfiguration().update('workbench.colorTheme', themeName, true);
+}
+
+export function turnOff() {
+  let configuration = vscode.workspace.getConfiguration(extensionName);
+  configuration.update('isTurnedOn', false, vscode.ConfigurationTarget.Global);
+}
+
+export function turnOn() {
+  let configuration = vscode.workspace.getConfiguration(extensionName);
+  configuration.update('isTurnedOn', true, vscode.ConfigurationTarget.Global);
 }
 
 export function cleanUp() {

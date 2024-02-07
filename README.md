@@ -4,6 +4,8 @@
 
 DayNight Theme is a Visual Studio Code extension that automatically changes your VS Code theme based on the time of day. It uses your location to determine the sunrise and sunset times, and switches between a day theme and a night theme accordingly.
 
+This extension is ***powered by the [SunriseSunset.io](https://sunrisesunset.io/) API***, which provides accurate sunrise and sunset times for any location in the world.
+
 ## Installation
 
 1. Open Visual Studio Code
@@ -18,10 +20,10 @@ After installing the extension, you need to set your location and choose your pr
 - `DayNight Theme: Set Location`
 - `DayNight Theme: Set Themes`
 
-You can also manually change the theme or toggle the automatic theme change feature with these commands:
+You can also manually toggle the automatic theme change feature with these commands:
 
-- `DayNight Theme: Change Theme`
-- `DayNight Theme: Toggle Auto Change`
+- `DayNight Theme: Turn on Day/Night Theme Cycle`
+- `DayNight Theme: Turn off Day/Night Theme Cycle`
 
 ## Extension Settings
 
@@ -30,6 +32,7 @@ This extension contributes the following settings:
 - `daynight-theme.location`: The location to use for the day/night cycle
 - `daynight-theme.dayTheme`: The theme to use during the day
 - `daynight-theme.nightTheme`: The theme to use during the night
+- `daynight-theme.isTurnedOn`: Whether the day/night cycle is turned on
 
 ## Contributing
 

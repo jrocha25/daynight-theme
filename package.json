@@ -2,7 +2,7 @@
   "name": "daynight-theme",
   "displayName": "DayNight Theme",
   "description": "Changes the theme based on the time of day of your location",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "icon": "img/icon.jpg",
   "publisher": "joao-rocha",
   "engines": {
@@ -37,6 +37,11 @@
           "type": "string",
           "default": "Default Dark+",
           "description": "The themes to use for the night"
+        },
+        "daynight-theme.isTurnedOn": {
+          "type": "boolean",
+          "default": true,
+          "description": "If day/night cycle is turned on"
         }
       }
     },
@@ -52,6 +57,14 @@
       {
         "command": "daynight-theme.setThemes",
         "title": "DayNight Theme: Set Themes"
+      },
+      {
+        "command": "daynight-theme.turnOn",
+        "title": "DayNight Theme: Turn on Day/Night Theme Cycle"
+      },
+      {
+        "command": "daynight-theme.turnOff",
+        "title": "DayNight Theme: Turn off Day/Night Theme Cycle"
       }
     ]
   },

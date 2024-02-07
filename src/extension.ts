@@ -1,21 +1,25 @@
 import * as vscode from 'vscode';
-import { setLocation, setThemes, checkTimesRoutine, extensionName, cleanUp } from './lib/helpers';
+import * as lib from './lib/helpers';
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand(`${extensionName}.setLocation`, setLocation);
+	let disposable = vscode.commands.registerCommand(`${lib.extensionName}.setLocation`, lib.setLocation);
 	context.subscriptions.push(disposable);
-	disposable = vscode.commands.registerCommand(`${extensionName}.setThemes`, setThemes);
+	disposable = vscode.commands.registerCommand(`${lib.extensionName}.setThemes`, lib.setThemes);
+	context.subscriptions.push(disposable);
+	disposable = vscode.commands.registerCommand(`${lib.extensionName}.turnOn`, lib.turnOn);
+	context.subscriptions.push(disposable);
+	disposable = vscode.commands.registerCommand(`${lib.extensionName}.turnOff`, lib.turnOff);
 	context.subscriptions.push(disposable);
 
-	checkTimesRoutine();
+	lib.checkTimesRoutine();
 
 	// setInterval(checkTimes, 5 * 60 * 1000);
-	setInterval(checkTimesRoutine, 10 * 1000);
+	setInterval(lib.checkTimesRoutine, 10 * 1000);
 
-	console.log(`${extensionName} is now active!`);
+	console.log(`${lib.extensionName} is now active!`);
 }
 
 // This method is called when your extension is deactivated
 export function deactivate() {
-	cleanUp();
+	lib.cleanUp();
 }
