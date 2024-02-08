@@ -13,8 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	lib.checkTimesRoutine();
 
-	// setInterval(checkTimes, 5 * 60 * 1000);
-	setInterval(lib.checkTimesRoutine, 10 * 1000);
+	setInterval(lib.checkTimesRoutine, 5 * 60 * 1000);
 
 	console.log(`${lib.extensionName} is now active!`);
 }
